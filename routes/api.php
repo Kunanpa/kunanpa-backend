@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('persona', [\App\Http\Controllers\API\PersonaController::class, 'index']);
+Route::post('signup', [\App\Http\Controllers\API\AuthController::class, 'signup']);

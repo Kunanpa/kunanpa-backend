@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('avatar');
+            $table->string('avatar')->default('https://robohash.org/molestiasevenietnon.png?size=250x250&set=set4');
             $table->string('dni');
-            $table->string('direccion');
+            $table->string('direccion')->nullable();
             $table->timestamps();
         });
     }
