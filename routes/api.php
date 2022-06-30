@@ -20,3 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('persona', [\App\Http\Controllers\API\PersonaController::class, 'index']);
 Route::post('signup', [\App\Http\Controllers\API\AuthController::class, 'signup']);
+Route::post('login', [\App\Http\Controllers\API\AuthController::class, 'login']);
+/*
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
+});*/
+

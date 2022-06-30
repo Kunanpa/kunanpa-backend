@@ -28,7 +28,7 @@ class SignupRequest extends FormRequest
             'email' => 'required',
             'password' => 'required',
             'nombre' => 'required',
-            'avatar' => '',
+            'avatar' => ['exclude_if:avatar,null', 'image'],
             'dni' => ['required', 'integer', 'digits:8'],
             'direccion' => ''
         ];
