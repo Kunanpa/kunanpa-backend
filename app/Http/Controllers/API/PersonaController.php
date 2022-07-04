@@ -40,12 +40,19 @@ class PersonaController extends Controller
     public function show($id)
     {
         $user = User::where('id', $id)->first();
-        $persona = Persona::where('id', $user->idPersona)->first();
-        $data = collect($user->only(['id', 'email']))->merge($persona->only(['nombre', 'avatar', 'dni', 'direccion']));
-        // $data = $user->merge($persona);
-        return response()->json([
-            'user' => $data
-        ], 200);
+        if ($user) {
+            $persona = Persona::where('id', $user->idPersona)->first();
+            $data = collect($user->only(['id', 'email']))->merge($persona->only(['nombre', 'avatar', 'dni', 'direccion']));
+            // $data = $user->merge($persona);
+            return response()->json([
+                'user' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Usuario no encontrado'
+            ], 200);
+        }
+
     }
 
     /**
