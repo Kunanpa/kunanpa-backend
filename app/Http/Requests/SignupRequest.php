@@ -25,7 +25,7 @@ class SignupRequest extends FormRequest
     {
         return [
             // Reglas de validacion
-            'email' => 'required',
+            'email' => ['required', 'email'],
             'password' => 'required',
             'nombre' => 'required',
             'avatar' => ['exclude_if:avatar,null', 'image'],

@@ -17,7 +17,7 @@ class PersonaController extends Controller
     public function index()
     {
         // Retornar todas las personas
-        return Persona::all();
+        // return Persona::all();
     }
 
     /**
@@ -41,7 +41,7 @@ class PersonaController extends Controller
     {
         $user = User::where('id', $id)->first();
         $persona = Persona::where('id', $user->idPersona)->first();
-        $data = collect($user->only(['email']))->merge($persona->only(['nombre', 'avatar', 'dni', 'direccion']));
+        $data = collect($user->only(['id', 'email']))->merge($persona->only(['nombre', 'avatar', 'dni', 'direccion']));
         // $data = $user->merge($persona);
         return response()->json([
             'user' => $data
