@@ -31,11 +31,10 @@ class AuthController extends Controller
         $user->password =Crypt::encrypt($signupRequest->password);
         $user->save();
 
+        $dato = collect($user->only(['id', 'email']))->merge($persona);
         return response()->json([
-            'data' => $signupRequest,
-            'persona' => $persona,
-            'user' => $user
-        ]);
+            'message' => 'Usuario creado'
+        ], 200);
     }
 
     /**
@@ -51,20 +50,23 @@ class AuthController extends Controller
         }
 
         if (!$user || !$validPassword) {
-            throw ValidationException::withMessages([
+            /*throw ValidationException::withMessages([
                 'statusCode' => 204,
-                'message' => ['Login invalido, email o password incorrecto']
-            ]);
+                'message' => ['Login invalido, email y/o password incorrecto']
+            ]);*/
+            return response()->json([
+                'message' => 'Login invalido, email y/o password incorrecto'
+            ], 401);
         }
         $persona = Persona::where('id', $user->idPersona)->first();
         $token = $user->createToken($request->email)->plainTextToken;
         // TODO: PENDIENTE CREAR JWT
+        $data = collect($user->only(['id', 'email']))->merge($persona);
+
         return response()->json([
-            'user' => $user,
-            'persona' => $persona,
             'token' => $token,
-            'valid' => $validPassword
-        ]);
+            'user' => $data->all()
+        ], 200);
     }
 
     /**
@@ -73,11 +75,9 @@ class AuthController extends Controller
      * @param Request $request
      */
     public function logout(Request $request){
-        /*$request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->delete();
         return response()->json([
-            'statusCode' => 200,
-            'message' => 'Token delete successful',
-            'data' => $request->user()
-        ]);*/
+            'message' => 'Sesion finalizada'
+        ], 200);
     }
 }

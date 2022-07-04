@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Persona;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PersonaController extends Controller
@@ -34,11 +35,17 @@ class PersonaController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        //
+        $user = User::where('id', $id)->first();
+        $persona = Persona::where('id', $user->idPersona)->first();
+        $data = collect($user->only(['email']))->merge($persona->only(['nombre', 'avatar', 'dni', 'direccion']));
+        // $data = $user->merge($persona);
+        return response()->json([
+            'user' => $data
+        ], 200);
     }
 
     /**

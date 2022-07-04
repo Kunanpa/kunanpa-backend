@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('avatar')->default('https://robohash.org/molestiasevenietnon.png?size=250x250&set=set4');
-            $table->string('dni');
+            $table->string('dni')->nullable();
             $table->string('direccion')->nullable();
             $table->timestamps();
         });
