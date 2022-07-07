@@ -28,3 +28,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('user', \App\Http\Controllers\API\PersonaController::class);
 });
 
+// Route::apiResource('categoria', \App\Http\Controllers\API\CategoriaController::class);
+Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'index']);
+
