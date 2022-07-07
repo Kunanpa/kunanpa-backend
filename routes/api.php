@@ -30,4 +30,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Route::apiResource('categoria', \App\Http\Controllers\API\CategoriaController::class);
 Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'index']);
+Route::post('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'store']);
 
