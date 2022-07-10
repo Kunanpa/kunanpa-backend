@@ -33,8 +33,7 @@ class CategoriaController extends Controller
         // $validate = $categoriaRequest->validate('nombre');
         $respuesta = Categoria::create($categoriaRequest->all());
         return response()->json([
-            'data' => $categoriaRequest->all(),
-            'response' => $respuesta
+            'message' => 'Nueva categoria creada'
         ]);
     }
 

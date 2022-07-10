@@ -25,7 +25,7 @@ class AuthController extends Controller
         // $persona = array_filter($signupRequest->except(['email','email']), 'strlen');
 
         // Registro en la tabla users
-        $user =new User();
+        $user = new User();
         $user->idPersona = $persona->id;
         $user->email = $signupRequest->email;
         $user->password =Crypt::encrypt($signupRequest->password);

@@ -30,5 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Route::apiResource('categoria', \App\Http\Controllers\API\CategoriaController::class);
 Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'index']);
-Route::post('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'store']);
+// Route::post('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'store']);
+
+Route::apiResource('flores', \App\Http\Controllers\API\FloresController::class);
+// Route::get('flores',  [\App\Http\Controllers\API\FloresController::class, 'index']);
 
