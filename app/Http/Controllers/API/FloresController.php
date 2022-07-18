@@ -71,12 +71,31 @@ class FloresController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        //
+        $flor = Flore::find($id);
+        if ($flor) {
+            $imagenes = Imagene::where('idFlor', $flor->id)->get('urlImagen');
+            $categorias = DB::table('flor_categorias')
+                ->join('categorias', 'flor_categorias.idCategoria', '=', 'categorias.id')
+                ->where('flor_categorias.idFlor', '=', $flor->id)
+                ->get(['categorias.id', 'categorias.nombre']);
+            $data = collect($flor)->merge(['imagenes' => $imagenes])->merge(['categorias' => $categorias]);
+            return response()->json([
+                /*'flor' => $flor,
+                'imagenes' => $imagenes,
+                'categorias' => $categorias,*/
+                'data' => $data
+            ]);
+        } else {
+            return response()->json([
+                'data' => null
+            ]);
+        }
+
     }
 
     /**
