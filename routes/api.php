@@ -33,5 +33,5 @@ Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, '
 // Route::post('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'store']);
 
 Route::apiResource('flores', \App\Http\Controllers\API\FloresController::class);
-// Route::get('flores',  [\App\Http\Controllers\API\FloresController::class, 'index']);
+Route::get('flores/categoria/{id}',  [\App\Http\Controllers\API\FloresController::class, 'byCategory']);
 

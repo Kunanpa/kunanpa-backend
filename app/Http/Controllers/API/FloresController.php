@@ -101,4 +101,23 @@ class FloresController extends Controller
     {
         //
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param $idCategoria
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function byCategory($idCategoria)
+    {
+        $data = DB::table('flores')
+            ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
+            ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
+            ->where('flor_categorias.idCategoria', '=', $idCategoria)
+            ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
+            ->groupBy('flores.id')
+            ->paginate(5);
+
+        return response()->json($data);
+    }
 }
