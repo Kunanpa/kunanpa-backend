@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('descuento')->default(0);
             $table->integer('precioInicial')->default(0);
             $table->integer('stock');
+            $table->integer('numVentas')->default(0);
             $table->timestamps();
         });
     }

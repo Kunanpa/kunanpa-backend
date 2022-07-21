@@ -20,6 +20,7 @@ class Flore extends Model
     ];
 
     protected $hidden = [
+        'numVentas',
         'created_at',
         'updated_at'
     ];
