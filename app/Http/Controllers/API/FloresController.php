@@ -139,4 +139,58 @@ class FloresController extends Controller
 
         return response()->json($data);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param $idCategoria
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function bySpecialCategory($idCategoria)
+    {
+        if ($idCategoria == 1) {
+            // $data = Flore::orderBy('numVentas', 'DESC')->take(4)->get();
+            $data = DB::table('flores')
+                ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
+                ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
+                ->groupBy('flores.id')
+                ->orderBy('flores.numVentas', 'DESC')
+                ->take(4)
+                ->get();
+        } elseif ($idCategoria == 2) {
+            $data = DB::table('flores')
+                ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
+                ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
+                ->groupBy('flores.id')
+                ->orderBy('flores.updated_at', 'DESC')
+                ->take(4)
+                ->get();
+        } elseif ($idCategoria == 3) {
+            $dataHombre = DB::table('flores')
+                ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
+                ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
+                ->where('flor_categorias.idCategoria', '=', 7)
+                ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
+                ->groupBy('flores.id')
+                ->take(2)
+                ->get();
+            $dataMujer = DB::table('flores')
+                ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
+                ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
+                ->where('flor_categorias.idCategoria', '=', 8)
+                ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
+                ->groupBy('flores.id')
+                ->take(2)
+                ->get();
+            $data = collect($dataHombre)->merge($dataMujer);
+        } else {
+            $data = null;
+        }
+
+
+        return response()->json([
+            'id' => $idCategoria,
+            'data' => $data
+        ]);
+    }
 }

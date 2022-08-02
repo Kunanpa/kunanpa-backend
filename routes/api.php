@@ -34,4 +34,4 @@ Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, '
 
 Route::apiResource('flores', \App\Http\Controllers\API\FloresController::class);
 Route::get('flores/categoria/{id}',  [\App\Http\Controllers\API\FloresController::class, 'byCategory']);
-
+Route::get('flores/categoria-especial/{id}',  [\App\Http\Controllers\API\FloresController::class, 'bySpecialCategory']);
