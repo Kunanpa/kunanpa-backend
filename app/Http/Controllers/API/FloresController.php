@@ -189,7 +189,6 @@ class FloresController extends Controller
 
 
         return response()->json([
-            'id' => $idCategoria,
             'data' => $data
         ]);
     }
