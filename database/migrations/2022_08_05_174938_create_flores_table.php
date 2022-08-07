@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('precioInicial')->default(0);
             $table->integer('stock');
             $table->integer('numVentas')->default(0);
+            $table->foreignId('idVendedor')->constrained('stores');
             $table->timestamps();
         });
     }
