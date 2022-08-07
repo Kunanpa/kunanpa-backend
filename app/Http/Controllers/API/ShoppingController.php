@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShopingRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ShoppingController extends Controller
 {
@@ -20,10 +22,10 @@ class ShoppingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ShopingRequest $shopingRequest
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(ShopingRequest $shopingRequest)
     {
         //
     }
