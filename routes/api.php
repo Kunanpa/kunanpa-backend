@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
-
+/**
+ * Rutas de acceso para clientes
+*/
 Route::post('signup', [\App\Http\Controllers\API\AuthController::class, 'signup']);
 Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'login']);
 
@@ -37,3 +39,14 @@ Route::get('flores/categoria/{id}',  [\App\Http\Controllers\API\FloresController
 Route::get('flores/categoria-especial/{id}',  [\App\Http\Controllers\API\FloresController::class, 'bySpecialCategory']);
 
 Route::apiResource('shopping', \App\Http\Controllers\API\ShoppingController::class);
+
+/**
+ * Rutas de acceso para administradores
+ */
+// Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'index']);
+
+Route::post('admin/login', [\App\Http\Controllers\API\AuthController::class, 'loginAdmin']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('admin/logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
+});

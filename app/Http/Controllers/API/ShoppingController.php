@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ShopingRequest;
+use App\Models\Compra;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ShoppingController extends Controller
 {
@@ -23,12 +23,19 @@ class ShoppingController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ShopingRequest $shopingRequest
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(ShopingRequest $shopingRequest)
     {
-        //
-    }
+        $datos_compra = $shopingRequest->except('arreglos', 'total');
+        $new_compra = Compra::create($datos_compra);
+        $pedidos = $shopingRequest->only('arreglos');
+        return response()->json([
+            'nueva' => $new_compra,
+            'datos' => $datos_compra,
+            'pedidos' => $pedidos
+        ]);
+    }// TODO: Pendiente la carga a la bd
 
     /**
      * Display the specified resource.

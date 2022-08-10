@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('idCliente')->constrained('personas');
             $table->string('nombres');
             $table->integer('numTelefono');
             $table->string('direccion');
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->integer('codigoPostal');
             $table->string('pais');
             $table->string('nota', 500)->nullable();
-            $table->foreignId('idCliente')->constrained('personas');
             $table->timestamps();
         });
     }

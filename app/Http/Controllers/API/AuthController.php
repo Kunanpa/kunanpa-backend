@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Models\Persona;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -78,6 +79,38 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
         return response()->json([
             'message' => 'Sesion finalizada'
+        ], 200);
+    }
+
+    /**
+     *  Iniciar sesion
+     *
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loginAdmin(LoginRequest $request)
+    {
+        $store = Store::where('email', $request->email)->first();
+        $validPassword = false;
+        if ($store) {
+            $validPassword = ($request->password == Crypt::decrypt($store->password)) ? true : false;
+        }
+
+        if (!$store || !$validPassword) {
+            /*throw ValidationException::withMessages([
+                'statusCode' => 204,
+                'message' => ['Login invalido, email y/o password incorrecto']
+            ]);*/
+            return response()->json([
+                'message' => 'Login invalido, email y/o password incorrecto'
+            ], 401);
+        }
+
+        $token = $store->createToken($request->email)->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'store' => $store
         ], 200);
     }
 }

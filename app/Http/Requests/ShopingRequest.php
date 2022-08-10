@@ -31,11 +31,12 @@ class ShopingRequest extends FormRequest
             'distrito' => 'required',
             'codigoPostal' => ['required', 'numeric'],
             'pais' => 'required',
-            'nota' => '',
-            'idflor' => ['required', 'numeric', 'exists:flores,id'],
-            'cantidad' => ['required', 'numeric'],
-            'costo' => ['required', 'numeric'],
+            'nota' => ['exclude_if:nota,null', 'string'],
+            'arreglos' => ['required', 'array'],
+            'arreglos.*.idFlor' => ['required', 'numeric', 'exists:flores,id'],
+            'arreglos.*.cantidad' => ['required', 'numeric'],
+            'arreglos.*.costo' => ['required', 'numeric'],
             'total' => ['required', 'numeric']
-        ]; // TODO: Pendiente revisar el request el array de productos
+        ];
     }
 }

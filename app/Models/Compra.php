@@ -10,6 +10,7 @@ class Compra extends Model
     use HasFactory;
 
     protected $fillable = [
+        'idCliente',
         'nombres',
         'numTelefono',
         'direccion',
@@ -20,7 +21,6 @@ class Compra extends Model
     ];
 
     protected $hidden = [
-        'idCliente',
         'created_at',
         'updated_at'
     ];
