@@ -7,6 +7,7 @@ use App\Http\Requests\FloresRequest;
 use App\Models\FlorCategoria;
 use App\Models\Flore;
 use App\Models\Imagene;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,16 +37,18 @@ class FloresController extends Controller
     public function store(FloresRequest $floresRequest)
     {
         $flores = $floresRequest->except(['imagenes', 'categorias']);
-        $imagenes = $floresRequest->only('imagenes');
+        // $imagenes = $floresRequest->only('imagenes');
+        $imagenes = $floresRequest->file('imagenes');
         $categorias = $floresRequest->only('categorias');
 
         // Creacion de nueva flores
         $newFlor = Flore::create($flores);
 
         // Adicion de las imagenes
-        foreach ($imagenes['imagenes'] as $imagen){
+        foreach ($imagenes as $imagen){
+            $urlImagen = Cloudinary::upload($imagen->getRealPath())->getSecurePath();
             $newImagen = new Imagene();
-            $newImagen->urlImagen = $imagen['urlImagen'];
+            $newImagen->urlImagen = $urlImagen;
             $newImagen->idFlor = $newFlor->id;
             $newImagen->save();
         }
@@ -54,18 +57,14 @@ class FloresController extends Controller
         foreach ($categorias['categorias'] as $cate){
             $newCate = new FlorCategoria();
             $newCate->idFlor = $newFlor->id;
-            $newCate->idCategoria = $cate['idCategoria'];
+            $newCate->idCategoria = $cate;
             $newCate->save();
         }
 
         return response()->json([
-            'message' => 'Registrado'
-            //'data' => $floresRequest->all(),
-            //'flores' => $flores,
-            //'imagenes' => $newImagen,
-            //'categorias' => $cate,
-            //'nuevaFlor' => $newFlor
+            'message' => 'Arreglo de flores registrado'
         ]);
+        // TODO: Pendiente documetar el api para cargar flores - arreglar el request
     }
 
     /**

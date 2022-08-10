@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'index']);
 // Route::post('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'store']);
 
-Route::apiResource('flores', \App\Http\Controllers\API\FloresController::class);
+Route::apiResource('flores', \App\Http\Controllers\API\FloresController::class)->except('store');
 Route::get('flores/categoria/{id}',  [\App\Http\Controllers\API\FloresController::class, 'byCategory']);
 Route::get('flores/categoria-especial/{id}',  [\App\Http\Controllers\API\FloresController::class, 'bySpecialCategory']);
 
@@ -49,4 +49,5 @@ Route::post('admin/login', [\App\Http\Controllers\API\AuthController::class, 'lo
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('admin/logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
+    Route::post('flores', [\App\Http\Controllers\API\FloresController::class, 'store']);
 });

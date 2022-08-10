@@ -16,11 +16,11 @@ class Flore extends Model
         'precioFinal',
         'descuento',
         'precioInicial',
-        'stock'
+        'stock',
+        'idVendedor'
     ];
 
     protected $hidden = [
-        'idVendedor',
         'numVentas',
         'created_at',
         'updated_at'

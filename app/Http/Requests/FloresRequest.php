@@ -24,6 +24,7 @@ class FloresRequest extends FormRequest
     public function rules()
     {
         return [
+            'idVendedor' => ['required', 'numeric' ,'exists:stores,id'],
             'nombre' => 'required',
             'descripcion' => 'nullable',
             'detalles' => 'nullable',
@@ -31,10 +32,10 @@ class FloresRequest extends FormRequest
             'descuento' => 'numeric',
             'precioInicial' => 'numeric',
             'stock' => 'required',
-            'imagenes' => ['required'],
-            'imagenes.*.urlImagen' => ['string'],
-            'categorias' => ['required'],
-            'categorias.*.idCategoria' => ['numeric']
+            'imagenes.*' => ['required', 'image'],
+            //'imagenes.*.urlImagen' => ['image'],
+            'categorias.*' => ['required', 'numeric' ,'exists:categorias,id'],
+            //'categorias.*.idCategoria' => ['required', 'numeric' ,'exists:categorias,id']
         ];
     }
 }
