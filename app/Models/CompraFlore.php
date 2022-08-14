@@ -12,12 +12,12 @@ class CompraFlore extends Model
     protected $fillable = [
         'cantidad',
         'costo',
-        'estado'
+        'estado',
+        'idCompra',
+        'idFlor',
     ];
 
     protected $hidden = [
-        'idCompra',
-        'idFlor',
         'created_at',
         'updated_at'
     ];

@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
     // Route::get('persona', [\App\Http\Controllers\API\PersonaController::class, 'index']);
     Route::apiResource('user', \App\Http\Controllers\API\PersonaController::class);
+
+    Route::apiResource('shopping', \App\Http\Controllers\API\ShoppingController::class);
 });
 
 // Route::apiResource('categoria', \App\Http\Controllers\API\CategoriaController::class);
@@ -38,7 +40,8 @@ Route::apiResource('flores', \App\Http\Controllers\API\FloresController::class)-
 Route::get('flores/categoria/{id}',  [\App\Http\Controllers\API\FloresController::class, 'byCategory']);
 Route::get('flores/categoria-especial/{id}',  [\App\Http\Controllers\API\FloresController::class, 'bySpecialCategory']);
 
-Route::apiResource('shopping', \App\Http\Controllers\API\ShoppingController::class);
+
+
 
 /**
  * Rutas de acceso para administradores
