@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ShopingRequest;
 use App\Models\Compra;
 use App\Models\CompraFlore;
+use App\Models\Flore;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShoppingController extends Controller
 {
@@ -39,6 +41,7 @@ class ShoppingController extends Controller
                 'idCompra' => $new_compra->id,
                 'idFlor' => $pedido['idFlor']
             ]);
+            DB::table('flores')->where('id', '=', $pedido['idFlor'])->increment('numVentas');
         }
 
         return response()->json([

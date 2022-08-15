@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::get('persona', [\App\Http\Controllers\API\PersonaController::class, 'index']);
     Route::apiResource('user', \App\Http\Controllers\API\PersonaController::class);
 
-    Route::apiResource('shopping', \App\Http\Controllers\API\ShoppingController::class);
+    Route::apiResource('shopping', \App\Http\Controllers\API\ShoppingController::class)->only('store');
 });
 
 // Route::apiResource('categoria', \App\Http\Controllers\API\CategoriaController::class);
