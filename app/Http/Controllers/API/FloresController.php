@@ -8,6 +8,7 @@ use App\Models\FlorCategoria;
 use App\Models\Flore;
 use App\Models\Imagene;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -190,5 +191,24 @@ class FloresController extends Controller
         return response()->json([
             'data' => $data
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return JsonResponse
+     */
+    public function byStore($idStore)
+    {
+        $data = DB::table('flores')
+            ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
+            ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
+            ->join('categorias', 'flor_categorias.idCategoria', '=', 'categorias.id')
+            ->where('flores.idVendedor', '=', $idStore)
+            ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen', 'categorias.nombre AS categoria')
+            ->groupBy('flores.id')
+            ->paginate(10);
+
+        return response()->json($data);
     }
 }
