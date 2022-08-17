@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('codigoPostal');
             $table->string('pais');
             $table->string('nota', 500)->nullable();
+            $table->integer('total');
             $table->timestamps();
         });
     }

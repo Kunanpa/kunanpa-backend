@@ -17,7 +17,8 @@ class Compra extends Model
         'distrito',
         'codigoPostal',
         'pais',
-        'nota'
+        'nota',
+        'total'
     ];
 
     protected $hidden = [

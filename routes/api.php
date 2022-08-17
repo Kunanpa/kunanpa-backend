@@ -55,6 +55,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('admin/logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
     Route::post('flores', [\App\Http\Controllers\API\FloresController::class, 'store']);
     Route::get('flores/store/{idStore}', [\App\Http\Controllers\API\FloresController::class, 'byStore']);
+    Route::get('pedidos/{idStore}', [\App\Http\Controllers\API\ShoppingController::class, 'getOrders']);
+
+    Route::get('detalles-pedido/{idOrder}', [\App\Http\Controllers\API\ShoppingController::class, 'ordersDetails']);
+    Route::post('cambiar-estado', [\App\Http\Controllers\API\ShoppingController::class, 'changeStatus']);
 });
 
 
