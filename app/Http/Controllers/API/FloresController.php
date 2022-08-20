@@ -54,7 +54,7 @@ class FloresController extends Controller
             $newImagen->save();
         }*/
         $newImagen = new Imagene();
-        $newImagen->urlImagen = 'https://res.cloudinary.com/yachayhuasi/image/upload/v1661014525/813d2652-3fc8-4dec-bdf1-ce5f7a21ed98_mavdtm.jpg';
+        $newImagen->urlImagen = 'https://res.cloudinary.com/yachayhuasi/image/upload/v1661024603/167492439-sin-foto-o-icono-de-imagen-en-blanco-cargando-im%C3%A1genes-o-marca-de-imagen-faltante-imagen-no-disponib_yboi8a.webp';
         $newImagen->idFlor = $newFlor->id;
         $newImagen->save();
 
