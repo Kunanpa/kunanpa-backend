@@ -32,7 +32,7 @@ class FloresRequest extends FormRequest
             'descuento' => 'numeric',
             'precioInicial' => 'numeric',
             'stock' => 'required',
-            //'imagenes.*' => ['image'],
+            'imagenes.*' => ['image'],
             //'imagenes.*.urlImagen' => ['image'],
             'categorias.*' => ['required', 'numeric' ,'exists:categorias,id'],
             //'categorias.*.idCategoria' => ['required', 'numeric' ,'exists:categorias,id']

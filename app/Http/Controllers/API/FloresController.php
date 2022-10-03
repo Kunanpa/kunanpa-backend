@@ -39,24 +39,24 @@ class FloresController extends Controller
     {
         $flores = $floresRequest->except(['imagenes', 'categorias']);
         // $imagenes = $floresRequest->only('imagenes');
-        // $imagenes = $floresRequest->file('imagenes');
+        $imagenes = $floresRequest->file('imagenes');
         $categorias = $floresRequest->only('categorias');
 
         // Creacion de nueva flores
         $newFlor = Flore::create($flores);
 
         // Adicion de las imagenes
-        /*foreach ($imagenes as $imagen){
+        foreach ($imagenes as $imagen){
             $urlImagen = Cloudinary::upload($imagen->getRealPath())->getSecurePath();
             $newImagen = new Imagene();
             $newImagen->urlImagen = $urlImagen;
             $newImagen->idFlor = $newFlor->id;
             $newImagen->save();
-        }*/
-        $newImagen = new Imagene();
+        }
+        /*$newImagen = new Imagene();
         $newImagen->urlImagen = 'https://res.cloudinary.com/yachayhuasi/image/upload/v1661024603/167492439-sin-foto-o-icono-de-imagen-en-blanco-cargando-im%C3%A1genes-o-marca-de-imagen-faltante-imagen-no-disponib_yboi8a.webp';
         $newImagen->idFlor = $newFlor->id;
-        $newImagen->save();
+        $newImagen->save();*/
 
         // Adicion de las categorias
         foreach ($categorias['categorias'] as $cate){
