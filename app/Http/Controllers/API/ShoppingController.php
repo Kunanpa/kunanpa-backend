@@ -11,9 +11,17 @@ use App\Models\Flore;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use MercadoPago;
 
 class ShoppingController extends Controller
 {
+    public function __construct()
+    {
+        MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,6 +44,9 @@ class ShoppingController extends Controller
         $new_compra = Compra::create($datos_compra);
         $pedidos = $shopingRequest->only('arreglos');
 
+        // Crea un objeto de preferencia
+        $preference = new MercadoPago\Preference();
+
         foreach ($pedidos['arreglos'] as $pedido){
             $new_pedido = CompraFlore::create([
                 'cantidad' => $pedido['cantidad'],
@@ -44,12 +55,32 @@ class ShoppingController extends Controller
                 'idFlor' => $pedido['idFlor']
             ]);
             DB::table('flores')->where('id', '=', $pedido['idFlor'])->increment('numVentas');
+            $flores = DB::table('flores')->where('id','=', $pedido['idFlor'])->get(['id', 'nombre', 'precioFinal']);
+
+            // Crea un ítem en la preferencia
+            $item = new MercadoPago\Item();
+            $item->title = $flores[0]->nombre;
+            $item->quantity = $pedido['cantidad'];
+            $item->unit_price = $flores[0]->precioFinal;
+
+            $products[] = $item;
+            $pedidosId[] = $new_pedido->id;
         }
 
+        $preference->items = $products;
+        $preference->metadata = ['idPedido' => $pedidosId];
+        $preference->save();
+
         return response()->json([
-            'message' => 'Pedido realizado correctamente.'
+            'message' => 'Pedido realizado correctamente.',
+            'MP-link' => $preference->init_point,
+            'key-client-side' => [
+                'public-key' => config('services.mercadopago.key'),
+                'preference-id' => $preference->id
+            ]
         ]);
     }
+    //TODO: Pendiente decidir los datos de retorno del API
 
     /**
      * Display the specified resource.
@@ -162,6 +193,30 @@ class ShoppingController extends Controller
         DB::table('compra_flores')->where('idCompra', '=', $request->idCompra)->update(['estado' => $request->nuevoEstado]);
         return response()->json([
             'message' => "Estado actualizado a '{$request->nuevoEstado}'"
+        ]);
+    }
+
+    /**
+     * Display a listing of orders.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function webhookMP(Request $request)
+    {
+        $data = $request->get('data');
+
+        $response = Http::withToken(config('services.mercadopago.token'))->get('https://api.mercadopago.com/v1/payments/'.$data['id']);
+        //Storage::disk('local')->put('webhook.txt',json_encode($response['metadata']['id_pedido']));
+        //Storage::disk('local')->put('webhook.txt',json_encode($response['status']));
+
+        foreach ($response['metadata']['id_pedido'] as $idPedido){
+            DB::table('compra_flores')->where('id', '=', $idPedido)->update(['estado' => $response['status']]);
+        }
+
+
+        return response()->json([
+            'message' => "Ok"
         ]);
     }
 }
