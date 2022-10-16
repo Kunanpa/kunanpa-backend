@@ -76,7 +76,7 @@ class AuthController extends Controller
      * @param Request $request
      */
     public function logout(Request $request){
-        $request->user()->tokens()->delete();
+        // $request->user()->currentAccessToken()->delete();
         return response()->json([
             'message' => 'Sesion finalizada'
         ], 200);

@@ -25,12 +25,13 @@ Route::post('signup', [\App\Http\Controllers\API\AuthController::class, 'signup'
 Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
+    //Route::get('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
     Route::apiResource('user', \App\Http\Controllers\API\PersonaController::class);
     Route::apiResource('shopping', \App\Http\Controllers\API\ShoppingController::class)->only('store');
     Route::apiResource('wish-list', \App\Http\Controllers\API\WishListController::class)->only(['store', 'destroy', 'index']);
 });
-
+//TODO: REMOVIDO VALIDACION DE TOKEN TEMPORAL
+Route::get('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
 
 // Route::apiResource('categoria', \App\Http\Controllers\API\CategoriaController::class);
 Route::get('categoria', [\App\Http\Controllers\API\CategoriaController::class, 'index']);
