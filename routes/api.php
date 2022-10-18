@@ -26,7 +26,7 @@ Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'login']
 
 Route::middleware('auth:sanctum')->group(function () {
     //Route::get('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
-    Route::apiResource('user', \App\Http\Controllers\API\PersonaController::class);
+    Route::apiResource('user', \App\Http\Controllers\API\PersonaController::class)->only('show');
     Route::apiResource('shopping', \App\Http\Controllers\API\ShoppingController::class)->only('store');
     Route::apiResource('wish-list', \App\Http\Controllers\API\WishListController::class)->only(['store', 'destroy', 'index']);
 });
