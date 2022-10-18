@@ -130,7 +130,7 @@ class ShoppingController extends Controller
             ->select('compras.id AS idPedido', DB::raw("CONCAT('# ', compras.id, ' ', compras.nombres) AS pedido"),'compras.created_at AS fecha', 'compra_flores.estado', 'compras.total')
             ->groupBy('compras.id')
             ->where('flores.idVendedor', '=', $idStore)
-            ->get();
+            ->paginate(10);
 
         return response()->json([
             'data' => $data
