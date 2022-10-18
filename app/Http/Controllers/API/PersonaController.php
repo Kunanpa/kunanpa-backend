@@ -45,7 +45,7 @@ class PersonaController extends Controller
             $data = collect($user->only(['id', 'email']))->merge($persona->only(['nombre', 'avatar', 'dni', 'direccion']));
             // $data = $user->merge($persona);
             return response()->json([
-                'user' => $user
+                'data' => $data
             ], 200);
         } else {
             return response()->json([
