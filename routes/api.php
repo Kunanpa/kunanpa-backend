@@ -67,4 +67,3 @@ Route::middleware('auth:sanctum')->group(function () {
  * Rutas de webhook para mercado pago
  */
 Route::post('webhook', [\App\Http\Controllers\API\ShoppingController::class, 'webhookMP']);
-//TODO: Pendiente poner a produccion el webhook

@@ -132,9 +132,7 @@ class ShoppingController extends Controller
             ->where('flores.idVendedor', '=', $idStore)
             ->paginate(10);
 
-        return response()->json([
-            'data' => $data
-        ]);
+        return response()->json($data);
     }
 
     /**
