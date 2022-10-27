@@ -23,6 +23,7 @@ class FloresController extends Controller
     {
         $data = DB::table('flores')
             ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
+            ->where('flores.disponible', '=', 'true')
             ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
             ->groupBy('flores.id')
             ->paginate(5);
@@ -137,6 +138,7 @@ class FloresController extends Controller
             ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
             ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
             ->where('flor_categorias.idCategoria', '=', $idCategoria)
+            ->where('flores.disponible', '=', 'true')
             ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
             ->groupBy('flores.id')
             ->paginate(5);
@@ -157,6 +159,7 @@ class FloresController extends Controller
             $data = DB::table('flores')
                 ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
                 ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
+                ->where('flores.disponible', '=', 'true')
                 ->groupBy('flores.id')
                 ->orderBy('flores.numVentas', 'DESC')
                 ->take(4)
@@ -165,6 +168,7 @@ class FloresController extends Controller
             $data = DB::table('flores')
                 ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
                 ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
+                ->where('flores.disponible', '=', 'true')
                 ->groupBy('flores.id')
                 ->orderBy('flores.updated_at', 'DESC')
                 ->take(4)
@@ -174,6 +178,7 @@ class FloresController extends Controller
                 ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
                 ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
                 ->where('flor_categorias.idCategoria', '=', 7)
+                ->where('flores.disponible', '=', 'true')
                 ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
                 ->groupBy('flores.id')
                 ->take(2)
@@ -182,6 +187,7 @@ class FloresController extends Controller
                 ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
                 ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
                 ->where('flor_categorias.idCategoria', '=', 8)
+                ->where('flores.disponible', '=', 'true')
                 ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
                 ->groupBy('flores.id')
                 ->take(2)
@@ -209,6 +215,7 @@ class FloresController extends Controller
             ->join('flor_categorias', 'flores.id', '=', 'flor_categorias.idFlor')
             ->join('categorias', 'flor_categorias.idCategoria', '=', 'categorias.id')
             ->where('flores.idVendedor', '=', $idStore)
+            ->where('flores.disponible', '=', 'true')
             ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen', 'categorias.nombre AS categoria')
             ->groupBy('flores.id')
             ->paginate(10);
