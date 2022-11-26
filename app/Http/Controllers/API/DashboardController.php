@@ -20,7 +20,7 @@ class DashboardController extends Controller
             ->select('created_at')->count('*');*/
         $data = DB::select('SELECT COUNT(*) num, created_at FROM compra_flores  GROUP BY month(created_at)');
         $res = [
-            'labels' => [ 'Aug', 'Sep', 'Oct', 'Nov'],
+            'labels' => [ 'Ago', 'Set', 'Oct', 'Nov'],
             'datasets' => [
                 [
                     'label' => 'Performance',
@@ -40,7 +40,7 @@ class DashboardController extends Controller
     {
         $data = DB::select("SELECT COUNT(*) num, created_at FROM `compra_flores` WHERE estado='Aprobado' OR estado='approved' GROUP BY month(created_at);");
         $res = [
-            'labels' => [ 'Aug', 'Sep', 'Oct', 'Nov'],
+            'labels' => [ 'Ago', 'Set', 'Oct', 'Nov'],
             'datasets' => [
                 [
                     'label' => 'Sales',
