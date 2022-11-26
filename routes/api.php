@@ -62,6 +62,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('cambiar-estado', [\App\Http\Controllers\API\ShoppingController::class, 'changeStatus']);
 });
 
+/**
+ * Rutas para el dashboard
+*/
+Route::get('ventas', [\App\Http\Controllers\API\DashboardController::class, 'ventas']);
+Route::get('pedidos', [\App\Http\Controllers\API\DashboardController::class, 'pedidos']);
+
 
 /**
  * Rutas de webhook para mercado pago
