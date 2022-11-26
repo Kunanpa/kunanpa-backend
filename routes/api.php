@@ -65,8 +65,8 @@ Route::middleware('auth:sanctum')->group(function () {
 /**
  * Rutas para el dashboard
 */
-Route::get('ventas', [\App\Http\Controllers\API\DashboardController::class, 'ventas']);
-Route::get('pedidos', [\App\Http\Controllers\API\DashboardController::class, 'pedidos']);
+Route::get('dashboard/ventas', [\App\Http\Controllers\API\DashboardController::class, 'ventas']);
+Route::get('dashboard/pedidos', [\App\Http\Controllers\API\DashboardController::class, 'pedidos']);
 
 
 /**
