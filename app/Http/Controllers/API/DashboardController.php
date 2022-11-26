@@ -38,13 +38,17 @@ class DashboardController extends Controller
      */
     public function pedidos()
     {
-        $data = DB::table('flores')
-            ->join('imagenes', 'flores.id', '=', 'imagenes.idFlor')
-            ->where('flores.disponible', '=', 'true')
-            ->select('flores.id', 'flores.nombre', 'flores.descripcion', 'flores.precioFinal', 'flores.descuento', 'flores.precioInicial', 'flores.stock', 'imagenes.urlimagen')
-            ->groupBy('flores.id')
-            ->paginate(5);
-
-        return response()->json($data[0]);
+        $data = DB::select("SELECT COUNT(*) num, created_at FROM `compra_flores` WHERE estado='Aprobado' OR estado='approved' GROUP BY month(created_at);");
+        $res = [
+            'labels' => [ 'Aug', 'Sep', 'Oct', 'Nov'],
+            'datasets' => [
+                [
+                    'label' => 'Sales',
+                    'data' => [$data[0]->num, 0, $data[1]->num, $data[2]->num],
+                    'maxBarThickness' => 10
+                ]
+            ]
+        ];
+        return response()->json($res);
     }
 }
