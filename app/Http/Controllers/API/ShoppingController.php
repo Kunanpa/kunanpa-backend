@@ -204,17 +204,17 @@ class ShoppingController extends Controller
     {
         $data = $request->get('data');
 
-        $response = Http::withToken(config('services.mercadopago.token'))->get('https://api.mercadopago.com/v1/payments/'.$data['id']);
+        /*$response = Http::withToken(config('services.mercadopago.token'))->get('https://api.mercadopago.com/v1/payments/'.$data['id']);
         //Storage::disk('local')->put('webhook.txt',json_encode($response['metadata']['id_pedido']));
         //Storage::disk('local')->put('webhook.txt',json_encode($response['status']));
 
         foreach ($response['metadata']['id_pedido'] as $idPedido){
             DB::table('compra_flores')->where('id', '=', $idPedido)->update(['estado' => $response['status']]);
-        }
+        }*/
 
 
         return response()->json([
-            'message' => "Ok"
+            'message' => "It's Ok"
         ]);
     }
 }
