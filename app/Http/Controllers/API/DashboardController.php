@@ -20,11 +20,11 @@ class DashboardController extends Controller
             ->select('created_at')->count('*');*/
         $data = DB::select('SELECT COUNT(*) num, created_at FROM compra_flores  GROUP BY month(created_at)');
         $res = [
-            'labels' => [ 'Ago', 'Set', 'Oct', 'Nov'],
+            'labels' => [ 'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
             'datasets' => [
                 [
                     'label' => 'Performance',
-                    'data' => [$data[0]->num, 0, $data[1]->num, $data[2]->num]
+                    'data' => [$data[0]->num, 0, $data[1]->num, $data[2]->num, $data[3]->num]
                 ]
             ]
         ];
@@ -40,11 +40,11 @@ class DashboardController extends Controller
     {
         $data = DB::select("SELECT COUNT(*) num, created_at FROM `compra_flores` WHERE estado='Aprobado' OR estado='approved' GROUP BY month(created_at);");
         $res = [
-            'labels' => [ 'Ago', 'Set', 'Oct', 'Nov'],
+            'labels' => [ 'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
             'datasets' => [
                 [
                     'label' => 'Sales',
-                    'data' => [$data[0]->num, 0, $data[1]->num, $data[2]->num],
+                    'data' => [$data[0]->num, 0, $data[1]->num, $data[2]->num, $data[3]->num],
                     'maxBarThickness' => 10
                 ]
             ]
